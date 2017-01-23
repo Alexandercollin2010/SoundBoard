@@ -1,6 +1,29 @@
 console.log('js');
 
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ["ngRoute"]);
+
+myApp.config(["$routeProvider", function($routeProvider){
+  $routeProvider
+    .when("/", {
+      templateUrl : "/public/views/index.html",
+      controller: "indexController"
+    })
+    .when("/register", {
+      templateUrl : "/public/views/register.html",
+      controller: "registerController"
+    })
+    .when("/login", {
+      templateUrl : "/public/views/login.html",
+      controller: "loginController"
+    })
+    .when("/profile", {
+      templateUrl: "/public/views/profile.html",
+      controller: "profileController"
+    })
+    .otherwise({
+      redirectTo: "/"
+    });
+}]);
 
 myApp.filter('youtubeEmbedUrl', function ($sce) {
     return function(videoId) {
@@ -34,7 +57,7 @@ $scope.songSearch = function(){
             query += '&maxResults=6';
             query += '&key=' + apiKey;
 
-  // var request = encodeURI(query) + '&callback=JSON_CALLBACK';
+  console.log( 'query:', query );
 
   $http({
       method: 'GET',
@@ -48,14 +71,71 @@ $scope.songSearch = function(){
         else {
           return false;
         }
-      // }).map(function(item){
-      //   item.id.videoId = 'www.youtube.com/watch?v=' + item.id.videoId;
-      //   return item;
-      // });
       console.log($scope.searchResults);
 
     });
   });
 }; // end search function
 };
-}]); // end searchController
+}]); // end indexController
+
+myApp.controller('registerController',['$scope', '$http', '$window',
+  function($scope, $http, $window) {
+  console.log('inside register controller');
+
+  $scope.register = function() {
+    var userInfo = {
+      username: $scope.username,
+      password: $scope.password,
+    };
+
+    $http({
+      method: 'POST',
+      url: '/register',
+      data: userInfo
+    }).then(function successCallback(response) {
+      console.log('success', response);
+      $window.location.href = '/';
+    }, function errorCallback(error) {
+      console.log('error occurred!');
+    }); // end then function
+
+    if( checkInput(userInfo.username, userInfo.password, $scope.rePassword) ){
+          console.log('headed to post');
+          $http({
+            method: 'POST',
+            url: '/register',
+            data: userInfo
+          }).then(function successCallback(response) {
+            console.log('success', response);
+            goToHome(userInfo);
+          }, function errorCallback(error) {
+            console.log('error occurred!');
+          });
+        } else {
+          alert("password incorrect");
+        }
+      }; // end $scope.register
+
+      var goToHome = function( userInfo ){
+          $http({
+            method: 'POST',
+            url: '/',
+            data: userInfo
+          }).then(function successCallback(response) {
+            console.log(response);
+            $window.location.href = '/profile';
+          }, function errorCallback(error) {
+            console.log('error', error);
+            $window.location.href = '/';
+          });
+        }; // end goToHome()
+
+    var checkInput = function(name, password, checkPassword){
+    console.log('in checkInput', name, password, checkPassword );
+    if ( !name || !password || !checkPassword)return false;
+    if ( password !== checkPassword )return false;
+    return true;
+  };// end checkInput()
+
+}]); // end registerController

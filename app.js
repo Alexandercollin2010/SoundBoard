@@ -2,12 +2,28 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
 var app = express();
+var path = require("path");
 
 // middleware
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+//require routers
+var indexRouter = require('./routes/index');
+console.log(indexRouter);
+var registerRouter = require('./routes/register');
+console.log(registerRouter);
+var loginRouter = require('./routes/login');
+console.log(loginRouter);
+var profileRouter = require('./routes/profile');
+console.log(profileRouter);
+
+app.get("/*", function(req, res){
+    console.log(req.params);
+    var file = req.params[0] || "public/views/index.html";
+    res.sendFile(path.join(__dirname, "/", file));
+});
 
 // server port set and listen
 var serverPort = process.env.port || 3000;
