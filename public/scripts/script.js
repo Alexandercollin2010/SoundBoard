@@ -79,63 +79,67 @@ $scope.songSearch = function(){
 };
 }]); // end indexController
 
-myApp.controller('registerController',['$scope', '$http', '$window',
-  function($scope, $http, $window) {
+myApp.controller('registerController',['$scope', '$http', '$window', '$location',
+  function($scope, $http, $window, $location) {
   console.log('inside register controller');
 
-  $scope.register = function() {
-    var userInfo = {
-      username: $scope.username,
-      password: $scope.password,
-    };
+  $scope.go = function ( path ) {
+    $location.path( path );
+  };
 
-    $http({
-      method: 'POST',
-      url: '/register',
-      data: userInfo
-    }).then(function successCallback(response) {
-      console.log('success', response);
-      $window.location.href = '/';
-    }, function errorCallback(error) {
-      console.log('error occurred!');
-    }); // end then function
+  // $scope.register = function() {
+  //   var userInfo = {
+  //     username: $scope.username,
+  //     password: $scope.password,
+  //   };
 
-    if( checkInput(userInfo.username, userInfo.password, $scope.rePassword) ){
-          console.log('headed to post');
-          $http({
-            method: 'POST',
-            url: '/register',
-            data: userInfo
-          }).then(function successCallback(response) {
-            console.log('success', response);
-            goToHome(userInfo);
-          }, function errorCallback(error) {
-            console.log('error occurred!');
-          });
-        } else {
-          alert("password incorrect");
-        }
-      }; // end $scope.register
-
-      var goToHome = function( userInfo ){
-          $http({
-            method: 'POST',
-            url: '/',
-            data: userInfo
-          }).then(function successCallback(response) {
-            console.log(response);
-            $window.location.href = '/profile';
-          }, function errorCallback(error) {
-            console.log('error', error);
-            $window.location.href = '/';
-          });
-        }; // end goToHome()
-
-    var checkInput = function(name, password, checkPassword){
-    console.log('in checkInput', name, password, checkPassword );
-    if ( !name || !password || !checkPassword)return false;
-    if ( password !== checkPassword )return false;
-    return true;
-  };// end checkInput()
+  //   $http({
+  //     method: 'POST',
+  //     url: '/register',
+  //     data: userInfo
+  //   }).then(function successCallback(response) {
+  //     console.log('success', response);
+  //     $window.location.href = '/';
+  //   }, function errorCallback(error) {
+  //     console.log('error occurred!');
+  //   }); // end then function
+  //
+  //   if( checkInput(userInfo.username, userInfo.password, $scope.rePassword) ){
+  //         console.log('headed to post');
+  //         $http({
+  //           method: 'POST',
+  //           url: '/register',
+  //           data: userInfo
+  //         }).then(function successCallback(response) {
+  //           console.log('success', response);
+  //           goToHome(userInfo);
+  //         }, function errorCallback(error) {
+  //           console.log('error occurred!');
+  //         });
+  //       } else {
+  //         alert("password incorrect");
+  //       }
+  //     }; // end $scope.register
+  //
+  //     var goToHome = function( userInfo ){
+  //         $http({
+  //           method: 'POST',
+  //           url: '/',
+  //           data: userInfo
+  //         }).then(function successCallback(response) {
+  //           console.log(response);
+  //           $window.location.href = '/profile';
+  //         }, function errorCallback(error) {
+  //           console.log('error', error);
+  //           $window.location.href = '/';
+  //         });
+  //       }; // end goToHome()
+  //
+  //   var checkInput = function(name, password, checkPassword){
+  //   console.log('in checkInput', name, password, checkPassword );
+  //   if ( !name || !password || !checkPassword)return false;
+  //   if ( password !== checkPassword )return false;
+  //   return true;
+  // };// end checkInput()
 
 }]); // end registerController

@@ -11,8 +11,8 @@
     <h1>soundboard</h1>
     <div ng-controller="registerController">
       <h3>register to save searches</h3>
-      <button href="/register" type="button" name="register">register</button>
-      <button href="/login" type="button" name="login">login</button>
+      <button ng-click="go('/register')">register</button>
+      <button src="/login" type="button" name="login">login</button>
     </div>
       <div ng-controller="indexController">
       <p>Do you want to learn how to play guitar but you're afraid to start?</p>
