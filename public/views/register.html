@@ -5,9 +5,16 @@
     <title>REGISTER</title>
   </head>
   <body>
-    <input ng-model="username" type="text" name="username">
-    <input ng-model="password" type="text" name="password">
-    <input ng-model="rePassword" type="text" name="rePassword">
+    New user? Please create a username and password.<br>
+    <label for="username">Username:</label>
+    <input style="display:block" ng-model="username" type="text" name="username">
+
+    <label for="password">Password:</label>
+    <input style="display:block" ng-model="password" type="text" name="password">
+
+    <label for="rePassword">Resubmit Password:</label>
+    <input style="display:block" ng-model="rePassword" type="text" name="rePassword">
+
     <button ng-click="register" type="button" name="submit">submit</button>
   </body>
 </html>
