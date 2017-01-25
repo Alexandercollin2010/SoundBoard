@@ -9,11 +9,7 @@
   </head>
   <body ng-app="myApp">
     <h1>soundboard</h1>
-    <div ng-controller="registerController">
-      <h3>register to save searches</h3>
-      <button ng-click="go('/register')">register</button>
-      <button src="/login" type="button" name="login">login</button>
-    </div>
+      <a href="#!/profile">profile</a>
       <div ng-controller="indexController">
       <p>Do you want to learn how to play guitar but you're afraid to start?</p>
       <strong>Let's learn together!</strong>
@@ -24,5 +20,6 @@
       <iframe style="display:block" width="440" height="260" ng-src="{{ vid.id.videoId | youtubeEmbedUrl }}" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
+    <main ng-view></main>
   </body>
 </html>

@@ -10,20 +10,22 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //require routers
-var indexRouter = require('./routes/index');
+var indexRouter = require('./server/routes/index');
 console.log(indexRouter);
-var registerRouter = require('./routes/register');
-console.log(registerRouter);
-var loginRouter = require('./routes/login');
-console.log(loginRouter);
-var profileRouter = require('./routes/profile');
-console.log(profileRouter);
+app.use('/', indexRouter);
+// var registerRouter = require('./routes/register');
+// console.log(registerRouter);
+// var loginRouter = require('./routes/login');
+// console.log(loginRouter);
+// var profileRouter = require('./server/routes/profile');
+// console.log(profileRouter);
+// app.use('/', profileRouter);
 
-app.get("/*", function(req, res){
-    console.log(req.params);
-    var file = req.params[0] || "public/views/index.html";
-    res.sendFile(path.join(__dirname, "/", file));
-});
+// app.get("/", function(req, res){
+//     console.log(req.params);
+//     var file = req.params[0] || "public/views/index.html";
+//     res.sendFile(path.join(__dirname, "/", file));
+// });
 
 // server port set and listen
 var serverPort = process.env.port || 3000;

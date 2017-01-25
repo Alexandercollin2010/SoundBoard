@@ -4,20 +4,16 @@ var myApp = angular.module('myApp', ["ngRoute"]);
 
 myApp.config(["$routeProvider", function($routeProvider){
   $routeProvider
-    .when("/", {
-      templateUrl : "/public/views/index.html",
-      controller: "indexController"
-    })
     .when("/register", {
-      templateUrl : "/public/views/register.html",
-      controller: "registerController"
+      templateUrl : "./views/register.html",
+      controller: "loginController"
     })
     .when("/login", {
-      templateUrl : "/public/views/login.html",
+      templateUrl : "./views/login.html",
       controller: "loginController"
     })
     .when("/profile", {
-      templateUrl: "/public/views/profile.html",
+      templateUrl: "./views/profile.html",
       controller: "profileController"
     })
     .otherwise({
@@ -79,36 +75,38 @@ $scope.songSearch = function(){
 };
 }]); // end indexController
 
-myApp.controller('registerController',['$scope', '$http', '$window', '$location',
-  function($scope, $http, $window, $location) {
-  console.log('inside register controller');
+myApp.controller('profileController',['$scope', '$http', function($scope, $http){
+console.log('in profileController');
 
-  $scope.go = function ( path ) {
-    $location.path( path );
-  };
+}]);
 
-  // $scope.register = function() {
-  //   var userInfo = {
-  //     username: $scope.username,
-  //     password: $scope.password,
-  //   };
-
-  //   $http({
-  //     method: 'POST',
-  //     url: '/register',
-  //     data: userInfo
-  //   }).then(function successCallback(response) {
-  //     console.log('success', response);
-  //     $window.location.href = '/';
-  //   }, function errorCallback(error) {
-  //     console.log('error occurred!');
-  //   }); // end then function
+// myApp.controller('loginController',['$scope', '$http', '$window',
+//   function($scope, $http, $window) {
+//   console.log('in loginController');
+//
+//   $scope.login = function() {
+//
+//     var userInfo = {
+//       username: $scope.username,
+//       password: $scope.password,
+//     };
+//
+//     $http({
+//       method: 'POST',
+//       url: '/',
+//       data: userInfo
+//     }).then(function successCallback(response) {
+//       console.log('success', response);
+//       $window.location.href = '/profile';
+//     }, function errorCallback(error) {
+//       console.log('error occurred!');
+    // }); // end then function
   //
   //   if( checkInput(userInfo.username, userInfo.password, $scope.rePassword) ){
   //         console.log('headed to post');
   //         $http({
   //           method: 'POST',
-  //           url: '/register',
+  //           url: '/',
   //           data: userInfo
   //         }).then(function successCallback(response) {
   //           console.log('success', response);
@@ -128,7 +126,7 @@ myApp.controller('registerController',['$scope', '$http', '$window', '$location'
   //           data: userInfo
   //         }).then(function successCallback(response) {
   //           console.log(response);
-  //           $window.location.href = '/profile';
+  //           $window.location.href = '/';
   //         }, function errorCallback(error) {
   //           console.log('error', error);
   //           $window.location.href = '/';
@@ -141,5 +139,5 @@ myApp.controller('registerController',['$scope', '$http', '$window', '$location'
   //   if ( password !== checkPassword )return false;
   //   return true;
   // };// end checkInput()
-
-}]); // end registerController
+// };
+// }]); // end loginController
