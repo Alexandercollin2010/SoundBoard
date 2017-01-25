@@ -1,6 +1,17 @@
 console.log('js');
 
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngRoute']);
+
+myApp.config(['$routeProvider', function($routeProvider){
+  $routeProvider
+  .when('/profile', {
+    templateUrl: 'views/profile.html',
+    controller: 'profileController'
+  })
+  .otherwise({
+    redirectTo: '/'
+  });
+}]); //end routeProvider
 
 myApp.filter('youtubeEmbedUrl', function ($sce) {
     return function(videoId) {
@@ -48,14 +59,32 @@ $scope.songSearch = function(){
         else {
           return false;
         }
-      // }).map(function(item){
-      //   item.id.videoId = 'www.youtube.com/watch?v=' + item.id.videoId;
-      //   return item;
-      // });
       console.log($scope.searchResults);
 
+      $scope.save = function (vid) {
+        console.log('saved');
+
+        $http.post('/routers', pet)
+    .then(function(response){
+      console.log('POST Hit!');
     });
-  });
+      }; // POST to DB
+
+    }); // end filter
+  }); // end then
 }; // end search function
 };
-}]); // end searchController
+}]); // end indexController
+
+myApp.controller('profileController', ['$scope', '$http', function($scope, $http){
+  $scope.display = function(){
+      console.log('GET');
+        $http({
+          method:'GET',
+          url: '/routes'
+        }).then(function(response){
+          console.log('GET Response', response.data);
+          $scope.favorites = response.data;
+        });
+    }; //end GET
+}]);
